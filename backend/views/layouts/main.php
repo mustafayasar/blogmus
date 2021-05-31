@@ -29,30 +29,35 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
+        'brandLabel'    => Yii::$app->name,
+        'brandUrl'      => Yii::$app->homeUrl,
+        'options'       => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+
+    $menuItems  = [
+        ['label' => 'Anasayfa', 'url' => ['/site/index']],
     ];
+
+    $menuItems[] = ['label' => 'Sayfalar', 'url' => ['/page/index']];
+    $menuItems[] = ['label' => 'Yazılar', 'url' => ['/post/index']];
+
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Giriş', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Çıkış',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
             . '</li>';
     }
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
+        'options'   => ['class' => 'navbar-nav navbar-right'],
+        'items'     => $menuItems,
     ]);
     NavBar::end();
     ?>
@@ -70,7 +75,7 @@ AppAsset::register($this);
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"><?= Yii::class ?></p>
     </div>
 </footer>
 

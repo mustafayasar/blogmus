@@ -4,7 +4,7 @@ use yii\db\Migration;
 use common\models\User;
 use common\models\Post;
 
-class m210415_113939_posts extends Migration
+class m210526_113939_posts extends Migration
 {
     public function up()
     {
@@ -13,6 +13,8 @@ class m210415_113939_posts extends Migration
             'type'              => $this->tinyInteger(1)->defaultValue(Post::POST_TYPE_POST),
             'slug'              => $this->string(250)->notNull()->unique(),
             'title'             => $this->string(250)->notNull(),
+            'image'             => $this->string(250)->notNull(),
+            'description'       => $this->string(1500)->notNull(),
             'content'           => 'LONGTEXT',
             'comment_status'    => $this->tinyInteger()->notNull()->defaultValue(Post::COMMENT_STATUS_ACTIVE),
             'post_date'         => $this->dateTime(),

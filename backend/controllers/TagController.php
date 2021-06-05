@@ -1,13 +1,18 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\CategoryForm;
+use backend\models\CategorySearch;
 use backend\models\PostForm;
 use backend\models\PostSearch;
+use backend\models\TagForm;
+use backend\models\TagSearch;
+use common\models\Category;
 use common\models\Post;
-use common\models\Student;
-use common\models\Teacher;
+use common\models\Tag;
 use Yii;
 use yii\base\BaseObject;
+use yii\helpers\VarDumper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,9 +23,9 @@ use common\models\LoginForm;
 
 
 /**
- * Page controller
+ * Tag controller
  */
-class PageController extends Controller
+class TagController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,7 +37,7 @@ class PageController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions'   => ['index', 'view','create', 'update', 'delete'],
+                        'actions'   => ['index', 'view', 'create', 'update', 'delete'],
                         'allow'     => true,
                         'roles'     => ['@'],
                     ],
@@ -41,7 +46,9 @@ class PageController extends Controller
             'verbs'     => [
                 'class' => VerbFilter::class,
                 'actions'   => [
-                    'logout'    => ['post'],
+                    'create'    => ['get', 'post'],
+                    'update'    => ['get', 'post'],
+                    'delete'    => ['post'],
                 ],
             ],
         ];
@@ -66,25 +73,24 @@ class PageController extends Controller
      */
     public function actionIndex(): string
     {
-        $searchModel   = new PostSearch();
+        $searchModel   = new TagSearch();
 
         return $this->render('index', [
-            'dataProvider'  => $searchModel->search(Yii::$app->request->queryParams, Post::POST_TYPE_PAGE),
+            'dataProvider'  => $searchModel->search(Yii::$app->request->queryParams),
             'filterModel'   => $searchModel
         ]);
     }
 
     /**
-     * Displays a single Post model.
+     * Displays a single Tag model.
      *
      * @param integer $id
      *
-     * @return mixed
+     * @return string
      *
      * @throws NotFoundHttpException if the model cannot be found
-     * @throws BadRequestHttpException
      */
-    public function actionView(int $id)
+    public function actionView(int $id): string
     {
         $model  = $this->findModel($id);
 
@@ -98,13 +104,12 @@ class PageController extends Controller
      */
     public function actionCreate()
     {
-        $model          = new PostForm();
-        $model->type    = Post::POST_TYPE_PAGE;
+        $model  = new TagForm();
 
         if ($model->load(Yii::$app->request->post()) && $response = $model->save())
         {
             if ($response) {
-                Yii::$app->session->addFlash('success', 'İçerik oluşturuldu.');
+                Yii::$app->session->addFlash('success', 'Etiket oluşturuldu.');
 
                 return $this->redirect(['view', 'id' => $model->_item->id]);
             }
@@ -118,20 +123,20 @@ class PageController extends Controller
     /**
      * @param integer $id
      *
-     * @return mixed
+     * @return Response|string
      *
      * @throws NotFoundHttpException
      */
     public function actionUpdate(int $id)
     {
-        $model = new PostForm();
+        $model = new TagForm();
 
         $model->findItem($id);
 
         if ($model->load(Yii::$app->request->post()) && $response = $model->save())
         {
             if ($response) {
-                Yii::$app->session->addFlash('success', 'İçerik başarıyla güncellendi.');
+                Yii::$app->session->addFlash('success', 'Etiket başarıyla güncellendi.');
 
                 return $this->redirect(['view', 'id' => $model->_item->id]);
             }
@@ -142,7 +147,29 @@ class PageController extends Controller
         ]);
     }
 
+    /**
+     * @param integer $id
+     *
+     * @return Response
+     *
+     * @throws NotFoundHttpException
+     */
+    public function actionDelete(int $id): Response
+    {
+        $model          = $this->findModel($id);
+        $model->status  = Tag::STATUS_DELETED;
 
+        if ($response = $model->save())
+        {
+            if ($response) {
+                Yii::$app->session->addFlash('success', 'Etiket başarıyla silindi.');
+            } else {
+                Yii::$app->session->addFlash('error', 'Etiket silinemedi.');
+            }
+        }
+
+        return $this->redirect(['index']);
+    }
 
     /**
      * Finds the Post model based on its primary key value.
@@ -150,16 +177,16 @@ class PageController extends Controller
      *
      * @param integer $id
      *
-     * @return Post the loaded model
+     * @return Tag the loaded model
      *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(int $id): Post
+    protected function findModel(int $id): Tag
     {
-        if (($model = Post::findOne($id)) !== null) {
+        if (($model = Tag::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('İçerik Bulunamadı.');
+        throw new NotFoundHttpException('Etiket Bulunamadı.');
     }
 }

@@ -1,13 +1,15 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\CategoryForm;
+use backend\models\CategorySearch;
 use backend\models\PostForm;
 use backend\models\PostSearch;
+use common\models\Category;
 use common\models\Post;
-use common\models\Student;
-use common\models\Teacher;
 use Yii;
 use yii\base\BaseObject;
+use yii\helpers\VarDumper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,9 +20,9 @@ use common\models\LoginForm;
 
 
 /**
- * Page controller
+ * Category controller
  */
-class PageController extends Controller
+class CategoryController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,7 +34,7 @@ class PageController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions'   => ['index', 'view','create', 'update', 'delete'],
+                        'actions'   => ['index', 'view', 'create', 'update', 'delete'],
                         'allow'     => true,
                         'roles'     => ['@'],
                     ],
@@ -41,7 +43,9 @@ class PageController extends Controller
             'verbs'     => [
                 'class' => VerbFilter::class,
                 'actions'   => [
-                    'logout'    => ['post'],
+                    'create'    => ['get', 'post'],
+                    'update'    => ['get', 'post'],
+                    'delete'    => ['post'],
                 ],
             ],
         ];
@@ -66,25 +70,25 @@ class PageController extends Controller
      */
     public function actionIndex(): string
     {
-        $searchModel   = new PostSearch();
+        $searchModel   = new CategorySearch();
 
         return $this->render('index', [
-            'dataProvider'  => $searchModel->search(Yii::$app->request->queryParams, Post::POST_TYPE_PAGE),
-            'filterModel'   => $searchModel
+            'dataProvider'  => $searchModel->search(Yii::$app->request->queryParams),
+            'filterModel'   => $searchModel,
+            'categories'    => Category::getArray()
         ]);
     }
 
     /**
-     * Displays a single Post model.
+     * Displays a single Category model.
      *
      * @param integer $id
      *
-     * @return mixed
+     * @return string
      *
      * @throws NotFoundHttpException if the model cannot be found
-     * @throws BadRequestHttpException
      */
-    public function actionView(int $id)
+    public function actionView(int $id): string
     {
         $model  = $this->findModel($id);
 
@@ -98,51 +102,76 @@ class PageController extends Controller
      */
     public function actionCreate()
     {
-        $model          = new PostForm();
-        $model->type    = Post::POST_TYPE_PAGE;
+        $model  = new CategoryForm();
 
         if ($model->load(Yii::$app->request->post()) && $response = $model->save())
         {
             if ($response) {
-                Yii::$app->session->addFlash('success', 'İçerik oluşturuldu.');
+                Yii::$app->session->addFlash('success', 'Kategori oluşturuldu.');
 
                 return $this->redirect(['view', 'id' => $model->_item->id]);
             }
         }
 
         return $this->render('create', [
-            'model' => $model
+            'model'         => $model,
+            'categories'    => Category::getArray()
         ]);
     }
 
     /**
      * @param integer $id
      *
-     * @return mixed
+     * @return Response|string
      *
      * @throws NotFoundHttpException
      */
     public function actionUpdate(int $id)
     {
-        $model = new PostForm();
+        $model = new CategoryForm();
 
         $model->findItem($id);
 
         if ($model->load(Yii::$app->request->post()) && $response = $model->save())
         {
             if ($response) {
-                Yii::$app->session->addFlash('success', 'İçerik başarıyla güncellendi.');
+                Yii::$app->session->addFlash('success', 'Kategori başarıyla güncellendi.');
 
                 return $this->redirect(['view', 'id' => $model->_item->id]);
             }
         }
 
         return $this->render('update', [
-            'model' => $model
+            'model' => $model,
+            'categories'    => Category::getArray($id)
         ]);
     }
 
+    /**
+     * @param integer $id
+     *
+     * @return Response
+     *
+     * @throws NotFoundHttpException
+     */
+    public function actionDelete(int $id): Response
+    {
+        $model          = $this->findModel($id);
+        $model->status  = Category::STATUS_DELETED;
 
+        if ($response = $model->save())
+        {
+            Category::updateAll(['status' => Category::STATUS_DELETED],  ['parent_id' => $id]);
+
+            if ($response) {
+                Yii::$app->session->addFlash('success', 'Kategori başarıyla silindi.');
+            } else {
+                Yii::$app->session->addFlash('error', 'Kategori silinemedi.');
+            }
+        }
+
+        return $this->redirect(['index']);
+    }
 
     /**
      * Finds the Post model based on its primary key value.
@@ -150,16 +179,16 @@ class PageController extends Controller
      *
      * @param integer $id
      *
-     * @return Post the loaded model
+     * @return Category the loaded model
      *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(int $id): Post
+    protected function findModel(int $id): Category
     {
-        if (($model = Post::findOne($id)) !== null) {
+        if (($model = Category::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('İçerik Bulunamadı.');
+        throw new NotFoundHttpException('Kategori Bulunamadı.');
     }
 }

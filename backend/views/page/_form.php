@@ -2,12 +2,6 @@
 /* @var $this yii\web\View */
 /* @var $model backend\models\PostForm */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $managers [] */
-/* @var $guides [] */
-/* @var $teachers [] */
-/* @var $countries [] */
-/* @var $cities [] */
-/* @var $towns [] */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

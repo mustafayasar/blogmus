@@ -12,15 +12,9 @@ use yii\helpers\ArrayHelper;
  * Class PostSearch
  *
  * @property integer $id
- * @property integer $type
- * @property string $slug
  * @property string $title
- * @property string $content
  * @property integer $comment_status
- * @property string $post_date
  * @property integer $post_status
- * @property integer $created_at
- * @property integer $updated_at
  *
  * @package backend\models
  */

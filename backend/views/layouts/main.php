@@ -40,6 +40,8 @@ AppAsset::register($this);
         ['label' => 'Anasayfa', 'url' => ['/site/index']],
     ];
 
+    $menuItems[] = ['label' => 'Kategoriler', 'url' => ['/category/index']];
+    $menuItems[] = ['label' => 'Etiketler', 'url' => ['/tag/index']];
     $menuItems[] = ['label' => 'Sayfalar', 'url' => ['/page/index']];
     $menuItems[] = ['label' => 'Yazılar', 'url' => ['/post/index']];
 

@@ -71,11 +71,12 @@ class Category extends ActiveRecord
     {
         $categories = Category::find()->where(['parent_id' => $parent_id])->orderBy('name ASC')->all();
 
+        $prf    = $parent_id > 0 ? $prf.'--' : '';
+
         foreach ($categories as $category) {
-            if ($category->id != $except_id) {
+            if ($category->id != $except_id || (is_array($except_id) && in_array($category->id, $except_id))) {
                 $arr[$category->id] = $prf.' '.$category->name;
 
-                $prf    = $prf.'--';
                 $arr    = self::getArray($except_id, $category->id, $arr, $prf);
             }
         }

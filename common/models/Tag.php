@@ -1,7 +1,9 @@
 <?php
 namespace common\models;
 
+use common\my\Helper;
 use Yii;
+use yii\base\BaseObject;
 use yii\base\Model;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -62,6 +64,43 @@ class Tag extends ActiveRecord
         return [
             TimestampBehavior::class,
         ];
+    }
+
+    public static function getArray($except_id = 0): array
+    {
+        $tags   = Tag::find()->orderBy('name ASC')->all();
+        $arr    = [];
+
+        foreach ($tags as $tag) {
+            if ($tag->id != $except_id || (is_array($except_id) && in_array($tag->id, $except_id))) {
+                $arr[$tag->id] = $tag->name;
+            }
+        }
+
+        return $arr;
+    }
+
+
+
+    public static function add($tag)
+    {
+        $slug   = Helper::slugify($tag);
+
+        $exists = Tag::find()->where(['slug' => $slug])->one();
+
+        if (!$exists) {
+            $new_tag        = new Tag();
+            $new_tag->name  = $tag;
+            $new_tag->slug  = $slug;
+
+            if ($new_tag->save()) {
+                return $new_tag->id;
+            }
+
+            return false;
+        }
+
+        return $exists->id;
     }
 
 }

@@ -15,6 +15,8 @@ use yii\web\IdentityInterface;
  * @property integer $type
  * @property string $slug
  * @property string $title
+ * @property string $description
+ * @property string $image
  * @property string $content
  * @property integer $comment_status
  * @property string $post_date
@@ -50,6 +52,8 @@ class Post extends ActiveRecord
     public static $labels = [
         'id'                => 'ID',
         'title'             => 'Başlık',
+        'description'       => 'Açıklama',
+        'image'             => 'Tanıtım Resmi',
         'content'           => 'İçerik',
         'comment_status'    => 'Yorum Yapabilme',
         'post_date'         => 'Yayın Tarihi',
@@ -80,6 +84,11 @@ class Post extends ActiveRecord
         return [
             TimestampBehavior::class,
         ];
+    }
+
+    public function getCategories(): \yii\db\ActiveQuery
+    {
+        return $this->hasMany(PostCategory::class, ['post_id' => 'id'])->with('category');
     }
 
 }

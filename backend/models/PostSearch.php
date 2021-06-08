@@ -44,7 +44,7 @@ class PostSearch extends Post
      */
     public function search($params, $type): ActiveDataProvider
     {
-        $query  = Post::find()->andFilterWhere(['type' => $type]);
+        $query  = Post::find()->with(['categories'])->andFilterWhere(['type' => $type]);
 
         $dataProvider   = new ActiveDataProvider([
             'query'         => $query,

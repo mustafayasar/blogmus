@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
 use common\models\Post;
 use kartik\editors\Summernote;
 use kartik\select2\Select2;
+use kartik\datetime\DateTimePicker;
 
 $comment_statuses   = Post::$comment_statuses;
 $post_statuses      = Post::$post_statuses;
@@ -48,6 +49,14 @@ $post_statuses      = Post::$post_statuses;
                 <?= Html::submitButton('Kaydet', ['class' => 'btn btn-success btn-block']) ?>
             </div>
 
+            <?= $form->field($model, 'post_date')->widget(DateTimePicker::class, [
+                'type' => DateTimePicker::TYPE_INPUT,
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format'    => 'yyyy-mm-dd hh:ii:ss'
+                ]
+            ])->label('Yayın Tarihi') ?>
+
             <?= $form->field($model, 'categories')->widget(Select2::class, [
                 'data'      => $categories,
                 'options'   => [
@@ -79,6 +88,7 @@ $post_statuses      = Post::$post_statuses;
                     'tokenSeparators'       => [',']
                 ],
             ])->label('Etiket Seç') ?>
+
         </div>
     </div>
 

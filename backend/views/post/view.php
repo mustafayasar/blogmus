@@ -30,11 +30,46 @@ $post_statuses      = Post::$post_statuses;
                     'id',
                     'title',
                     'slug',
+                    'description',
+                    [
+                        'attribute' => 'categories',
+                        'value'     => function($model) {
+                            $text = null;
+
+                            foreach ($model->categories as $post_category) {
+                                $text   .= $text ? ', ' : '';
+                                $text   .= $post_category->category->name;
+                            }
+                            return $text;
+                        }
+                    ],
+                    [
+                        'attribute' => 'tags',
+                        'value'     => function($model) {
+                            $text = null;
+
+                            foreach ($model->tags as $post_tag) {
+                                $text   .= $text ? ', ' : '';
+                                $text   .= $post_tag->tag->name;
+                            }
+                            return $text;
+                        }
+                    ],
+                    [
+                        'format'    => 'html',
+                        'attribute' => 'image',
+                        'value'     => function($model) {
+                            return '<img src="'.Yii::$app->params['postImageUrl'].$model->image.'" style="max-width: 250px; width: 100%;" />';
+                        }
+                    ],
                     [
                         'attribute' => 'comment_status',
                         'value'     => function($model) use ($comment_statuses) {
                             return $comment_statuses[$model->comment_status];
                         }
+                    ],
+                    [
+                        'attribute' => 'post_date'
                     ],
                     [
                         'attribute' => 'post_status',

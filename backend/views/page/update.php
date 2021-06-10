@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Sayfalar', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="col-md-6">
+<div class="col-md-12">
     <div class="x_panel">
         <div class="x_title">
             <h2><i class="fa fa-edit"></i> Sayfa Düzenle (<?= $model->title ?>)</h2>

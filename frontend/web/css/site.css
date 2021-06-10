@@ -11,7 +11,7 @@ body {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 10px 15px 20px;
 }
 
 .footer {
@@ -117,4 +117,123 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+#header {
+    background-image: url(/images/header-background.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #ffffff;
+    min-height: 280px;
+    text-align: center;
+    padding-top: 60px;
+}
+
+#header h1 {
+    font-size: 45px;
+}
+#header h3 {
+    font-size: 25px;
+}
+.navbar {
+    border: none;
+    border-top: 1px solid transparent;
+}
+.navbar-inverse {
+    border-color: #545454;
+}
+@media (min-width: 768px){
+    .navbar-nav{
+        float:none;
+        margin: 0 auto;
+        display: table;
+        table-layout: fixed;
+    }
+    .navbar-nav > li > a {
+        padding: 15px 25px;
+    }
+}
+
+.post-list {
+}
+.post-list .post-item {
+
+}
+.post-list .post-item .post-image{
+    border: 1px solid #cccccc;
+    padding: 6px;
+}
+.post-list .post-item .post-image img {
+    max-width: 400px;
+    width: 100%;
+}
+.post-list .post-item .post-title {
+
+}
+.post-list .post-item .post-description {
+
+}
+.post-view {
+
+}
+.post-view h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+.post-info {
+    margin-top: 30px;
+}
+.post-date, .post-categories, .post-tags {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+.post-categories i, .post-tags i{
+    margin-right: 6px;
+}
+.posts h1 {
+    padding: 0 18px 14px;
+    margin-top: 0;
+}
+
+.home-about {
+    padding: 10px 120px 40px;
+}
+.home-about img {
+    padding: 6px;
+    width: 350px;
+    margin-right: 26px;
+}
+.home-about h2 {
+    margin-top: 0;
+}
+.home-about p {
+    font-size: 21px;
+    line-height: 34px;
+    color: #6f6f6f;
+}
+.home-about a.btn {
+    font-size: 19px;
+}
+
+@media(max-width:767px) {
+
+    .home-about {
+        padding: 10px 20px 40px;
+    }
+    .home-about img {
+        padding: 0;
+        width: 100%;
+        padding-bottom: 14px;
+    }
+    .home-about h2 {
+        padding-top: 20px;
+    }
+    .home-about p {
+        font-size: 16px;
+        line-height: 25px;
+        color: #6f6f6f;
+    }
+    .home-about a.btn {
+        font-size: 16px;
+    }
 }

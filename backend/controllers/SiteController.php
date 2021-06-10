@@ -49,8 +49,8 @@ class SiteController extends Controller
     public function actions(): array
     {
         return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
+            'error'     => [
+                'class' => 'yii\web\ErrorAction'
             ],
         ];
     }
@@ -58,11 +58,11 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
-     * @return string
+     * @return Response
      */
-    public function actionIndex(): string
+    public function actionIndex(): Response
     {
-        return $this->render('index');
+        return $this->redirect(['post/index']);
     }
 
     /**

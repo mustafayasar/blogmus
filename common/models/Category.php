@@ -6,6 +6,7 @@ use yii\base\Model;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\VarDumper;
 use yii\web\IdentityInterface;
 
 /**
@@ -69,7 +70,7 @@ class Category extends ActiveRecord
 
     public static function getArray($except_id = 0, $parent_id = 0, $arr = [], $prf = '')
     {
-        $categories = Category::find()->where(['parent_id' => $parent_id])->orderBy('name ASC')->all();
+        $categories = Category::find()->andWhere(['parent_id' => $parent_id])->andWhere(['status' => Category::STATUS_ACTIVE])->orderBy('name ASC')->all();
 
         $prf    = $parent_id > 0 ? $prf.'--' : '';
 
@@ -84,6 +85,36 @@ class Category extends ActiveRecord
         return $arr;
     }
 
+    public static function getArrayWithSlug($parent_id = 0, $arr = [], $prf = '')
+    {
+        $categories = Category::find()->andWhere(['parent_id' => $parent_id])->andWhere(['status' => Category::STATUS_ACTIVE])->orderBy('name ASC')->all();
+
+        $prf    = $parent_id > 0 ? $prf.'--' : '';
+
+        foreach ($categories as $category) {
+            $arr[$category->slug] = $prf.' '.$category->name;
+
+            $arr    = self::getArrayWithSlug($category->id, $arr, $prf);
+        }
+
+        return $arr;
+    }
+
+    public static function getIdsWithChildren($id, &$arr = [])
+    {
+        $categories   = Category::find()->select('id')->andWhere(['parent_id' => $id])->andWhere(['status' => Category::STATUS_ACTIVE])->all();
+
+        $arr[$id]  = $id;
+
+        foreach ($categories as $category) {
+            $arr[$category->id]  = $category->id;
+
+            $arr    = self::getIdsWithChildren($category->id, $arr);
+        }
+
+        return $arr;
+    }
+
 
     public function getParent(): \yii\db\ActiveQuery
     {
@@ -92,7 +123,7 @@ class Category extends ActiveRecord
 
     public function getChildren(): \yii\db\ActiveQuery
     {
-        return $this->hasMany(Category::class, ['parent_id' => 'id'])->with('children')->orderBy('name ASC');
+        return $this->hasMany(Category::class, ['parent_id' => 'id'])->with('children')->andWhere(['status' => Category::STATUS_ACTIVE])->orderBy('name ASC');
     }
 
 }

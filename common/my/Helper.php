@@ -188,4 +188,15 @@ class Helper
 
         return false;
     }
+
+
+    public static function getConfig()
+    {
+
+    }
+
+    public static function getConfigUrl()
+    {
+
+    }
 }

@@ -7,6 +7,9 @@
 $this->title = 'Yazı Oluştur';
 $this->params['breadcrumbs'][] = ['label' => 'Yazılar', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+
+$model->post_date   = empty($model->post_date) ? date("Y-m-d H:i:s") : $model->post_date;
 ?>
 <div class="col-md-12">
     <div class="x_panel">

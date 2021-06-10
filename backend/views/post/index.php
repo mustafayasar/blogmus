@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'attribute'     => 'categories',
-                            'label'         => 'Kategori',
                             'value'         => function($model) {
                                 $text = null;
 

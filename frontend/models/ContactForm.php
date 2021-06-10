@@ -35,10 +35,14 @@ class ContactForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
-            'verifyCode' => 'Verification Code',
+            'name'          => 'Ad Soyad',
+            'email'         => 'Mail Adresi',
+            'subject'       => 'Konu',
+            'body'          => 'Mesaj',
+            'verifyCode'    => 'Doğrulama',
         ];
     }
 
@@ -48,7 +52,7 @@ class ContactForm extends Model
      * @param string $email the target email address
      * @return bool whether the email was sent
      */
-    public function sendEmail($email)
+    public function sendEmail(string $email): bool
     {
         return Yii::$app->mailer->compose()
             ->setTo($email)

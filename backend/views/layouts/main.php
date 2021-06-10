@@ -37,13 +37,12 @@ AppAsset::register($this);
     ]);
 
     $menuItems  = [
-        ['label' => 'Anasayfa', 'url' => ['/site/index']],
+        ['label' => 'Yazılar', 'url' => ['/post/index']],
     ];
 
     $menuItems[] = ['label' => 'Kategoriler', 'url' => ['/category/index']];
     $menuItems[] = ['label' => 'Etiketler', 'url' => ['/tag/index']];
     $menuItems[] = ['label' => 'Sayfalar', 'url' => ['/page/index']];
-    $menuItems[] = ['label' => 'Yazılar', 'url' => ['/post/index']];
 
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Giriş', 'url' => ['/site/login']];
@@ -76,8 +75,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::class ?></p>
     </div>
 </footer>
 

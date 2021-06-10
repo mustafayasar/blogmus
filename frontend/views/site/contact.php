@@ -12,14 +12,18 @@ $this->title = 'İletişim';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div style="text-align: center">
 
-    <p>
-        İletişim sayfası özelleştirilecek.
-    </p>
+        <h1><?= Html::encode($this->title) ?></h1>
+
+        <p>
+            Site ile ilgili görüş ve önerilerinizi iletebilirsiniz.
+        </p>
+    </div>
 
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-md-6 col-md-offset-3">
+            <?= \common\widgets\Alert::widget() ?>
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
                 <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
@@ -30,12 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
 
-                <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
                 ]) ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton('Gönder', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>

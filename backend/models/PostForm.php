@@ -59,6 +59,8 @@ class PostForm extends Model
                 [['type', 'comment_status', 'post_status'], 'integer'],
                 [['title', 'content'], 'required'],
 
+                ['post_date', 'datetime', 'format' => 'php:Y-m-d H:i:s'],
+
                 [['categories', 'tags'], 'safe'],
 
                 ['image', 'safe'],
@@ -119,7 +121,7 @@ class PostForm extends Model
                 $file_name = $this->_item->slug.'.'.$file[0]->extension;
 
                 if ($file[0]->saveAs(Yii::$app->params['postImageDirectory'] . 'org_' . $file_name)) {
-                    Image::thumbnail(Yii::$app->params['postImageDirectory'] . 'org_' . $file_name, 250, 250)
+                    Image::thumbnail(Yii::$app->params['postImageDirectory'] . 'org_' . $file_name, 350, 350)
                         ->save(Yii::$app->params['postImageDirectory'] . $file_name, ['quality' => 74]);
 
                     $this->_item->image = $file_name;

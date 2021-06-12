@@ -34,7 +34,7 @@ class CommentForm extends Model
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels(): array
+    public function attributeLabels()
     {
         return [
             'name'          => 'Ad Soyad',

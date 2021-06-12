@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $post common\models\Post */
+/* @var $commentForm frontend\models\CommentForm */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -43,3 +44,9 @@ $this->title = $post->title;
         </div>
     <?php } ?>
 </div>
+
+<?php
+    if ($post->comment_status === Post::COMMENT_STATUS_ACTIVE) {
+        echo $this->render('comments', ['commentForm' => $commentForm]);
+    }
+?>

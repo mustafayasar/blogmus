@@ -4,9 +4,11 @@ namespace frontend\controllers;
 use common\models\Category;
 use common\models\Post;
 use common\models\Tag;
+use frontend\models\CommentForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
+use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
 use yii\helpers\VarDumper;
 use yii\web\BadRequestHttpException;
@@ -110,7 +112,7 @@ class PostController extends Controller
 
 
     /**
-     * Displays homepage.
+     * view post
      *
      * @param $slug
      *
@@ -126,8 +128,25 @@ class PostController extends Controller
         }
 
         return $this->render('view', [
-                'post'  => $post
+                'post'          => $post,
+                'commentForm'   => new CommentForm()
             ]
         );
+    }
+
+    public function actionSaveComment()
+    {
+        $model  = new CommentForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            if ($model->sendEmail('mustafayasar@live.com')) {
+                Yii::$app->session->addFlash('success', 'Mesajınız iletildi.');
+            } else {
+                Yii::$app->session->addFlash('error', 'HATA! Mesajınız iletilemedi.');
+            }
+
+            return $this->refresh();
+        }
     }
 }

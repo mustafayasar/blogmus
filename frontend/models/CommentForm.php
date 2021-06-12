@@ -1,27 +1,30 @@
 <?php
+
 namespace frontend\models;
 
+use common\models\Post;
 use Yii;
 use yii\base\Model;
 
 /**
- * ContactForm
+ * CommentForm is the model behind the contact form.
  */
-class ContactForm extends Model
+class CommentForm extends Model
 {
+    public $post_id;
     public $name;
     public $email;
-    public $subject;
-    public $body;
+    public $content;
     public $verifyCode;
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            [['name', 'email', 'subject', 'body'], 'required'],
+            [['name', 'email', 'content'], 'required'],
+            ['post_id', 'exist', 'targetClass' => Post::class, 'targetAttribute' => ['post_id' => 'id']],
             ['email', 'email'],
             ['verifyCode', 'captcha'],
         ];
@@ -35,9 +38,8 @@ class ContactForm extends Model
         return [
             'name'          => 'Ad Soyad',
             'email'         => 'Mail Adresi',
-            'subject'       => 'Konu',
-            'body'          => 'Mesaj',
-            'verifyCode'    => 'Doğrulama',
+            'content'       => 'Mesaj',
+            'verifyCode'    => 'Resimde Gördüğünüzü Kutucuğa Giriniz',
         ];
     }
 
@@ -49,12 +51,6 @@ class ContactForm extends Model
      */
     public function sendEmail(string $email): bool
     {
-        return Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-            ->setReplyTo([$this->email => $this->name])
-            ->setSubject($this->subject)
-            ->setTextBody($this->body)
-            ->send();
+        return '';
     }
 }

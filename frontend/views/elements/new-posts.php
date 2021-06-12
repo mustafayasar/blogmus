@@ -15,7 +15,9 @@ $posts  = Post::getNewItems($limit);
     <?php foreach ($posts as $post) { ?>
         <div class="post-item col-md-4">
             <div class="post-image">
-                <img alt="<?= $post->title ?>" src="<?= Yii::$app->params['postImageUrl'].$post->image ?>" />
+                <a href="<?= Url::to(['post/view', 'slug' => $post->slug]) ?>" title="<?= $post->title ?>">
+                    <img alt="<?= $post->title ?>" src="<?= Yii::$app->params['postImageUrl'].$post->image ?>" />
+                </a>
             </div>
             <h3 class="post-title"><a href="<?= Url::to(['post/view', 'slug' => $post->slug]) ?>" title="<?= $post->title ?>"><?= $post->title ?></a></h3>
             <div class="post-description">

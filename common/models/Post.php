@@ -39,9 +39,9 @@ class Post extends ActiveRecord
     const COMMENT_STATUS_PASSIVE   = 2;
 
     public static $post_statuses    = [
-        self::POST_STATUS_DRAFT     => "Taslak",
         self::POST_STATUS_ACTIVE    => "Aktif",
         self::POST_STATUS_PASSIVE   => "Pasif",
+        self::POST_STATUS_DRAFT     => "Taslak",
         self::POST_STATUS_DELETED   => "Silindi",
     ];
 

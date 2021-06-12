@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\Comment;
 use common\models\Post;
 use Yii;
 use yii\base\Model;
@@ -43,14 +44,21 @@ class CommentForm extends Model
         ];
     }
 
-    /**
-     * Sends an email to the specified email address using the information collected by this model.
-     *
-     * @param string $email the target email address
-     * @return bool whether the email was sent
-     */
-    public function sendEmail(string $email): bool
+
+    public function save(): bool
     {
-        return '';
+        if ($this->validate()) {
+            $comment    = new Comment();
+            $comment->post_id       = $this->post_id;
+            $comment->name          = $this->name;
+            $comment->email         = $this->email;
+            $comment->content       = $this->content;
+            $comment->comment_date  = date("Y-m-d H:i:s");
+            $comment->status        = Comment::STATUS_PASSIVE;
+
+            return $comment->save();
+        }
+
+        return false;
     }
 }

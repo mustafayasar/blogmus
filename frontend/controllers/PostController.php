@@ -140,7 +140,7 @@ class PostController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            if ($model->sendEmail('mustafayasar@live.com')) {
+            if ($model->c) {
                 Yii::$app->session->addFlash('success', 'Mesajınız iletildi.');
             } else {
                 Yii::$app->session->addFlash('error', 'HATA! Mesajınız iletilemedi.');

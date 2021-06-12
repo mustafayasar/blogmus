@@ -39,9 +39,6 @@
         "fxp-asset": {
             "enabled": false
         },
-        "platform": {
-            "php": "7.0.0"
-        }
     },
     "repositories": [
         {

@@ -36,6 +36,7 @@ $statuses   = Comment::$statuses;
                     'content',
                     'comment_date',
                     [
+                        'format'    => 'html',
                         'attribute' => 'status',
                         'value'     => function($model) use ($statuses) {
                             if ($model->status == Comment::STATUS_DELETED) {

@@ -20,7 +20,7 @@ $this->title = 'Blogmus';
         <h2 style="text-align: center; font-size: 33px; margin-bottom: 20px;">Yeni Yazılar</h2>
         <?= $this->render('/elements/new-posts', ['limit' => 3]) ?>
 
-        <div style="text-align: center; padding: 30px 0px;">
+        <div style="text-align: center; padding-bottom: 30px;">
             <a href="<?= Url::to(['post/index']) ?>" title="Yeni Yazılar" class="btn btn-default">Tümümü Gör</a>
         </div>
 

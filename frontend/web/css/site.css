@@ -157,7 +157,7 @@ a.desc:after {
 .post-list {
 }
 .post-list .post-item {
-
+    margin-bottom: 26px;
 }
 .post-list .post-item .post-image{
     border: 1px solid #cccccc;

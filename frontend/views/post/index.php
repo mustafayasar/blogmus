@@ -32,9 +32,15 @@ $this->params['description']  = $description;
                         <?= Helper::getDate($post->post_date) ?>
                     </div>
                 </div>
-            <?php $x++;} ?>
+                <?php
+                $x++;
+                if ($x == 3) {
+                    $x = 0;
+                    echo '<div class="clearfix"></div>';
+                }
+                ?>
+            <?php } ?>
 
-            <?= $x == 3 ? '<div class="clearfix"></div>' : ''; ?>
 
         <?php } else { ?>
             <div class="alert alert-warning">

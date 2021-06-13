@@ -4,6 +4,7 @@
 
 use yii\widgets\DetailView;
 use common\models\Comment;
+use yii\helpers\Url;
 
 $this->title = 'Yorum Görüntüle';
 $this->params['breadcrumbs'][] = ['label' => 'Yorumlar', 'url' => ['index']];

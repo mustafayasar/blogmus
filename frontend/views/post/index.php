@@ -15,7 +15,8 @@ $this->params['description']  = $description;
 <div class="posts">
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="post-list">
-        <?php if (count($posts) > 0) { ?>
+        <?php if (count($posts) > 0) {
+            $x = 0; ?>
             <?php foreach ($posts as $post) { ?>
                 <div class="post-item col-md-4">
                     <div class="post-image">
@@ -31,7 +32,10 @@ $this->params['description']  = $description;
                         <?= Helper::getDate($post->post_date) ?>
                     </div>
                 </div>
-            <?php } ?>
+            <?php $x++;} ?>
+
+            <?= $x == 3 ? '<div class="clearfix"></div>' : ''; ?>
+
         <?php } else { ?>
             <div class="alert alert-warning">
                 Bu kategoriye henüz yazı eklenmedi.

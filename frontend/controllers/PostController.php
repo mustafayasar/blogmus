@@ -143,7 +143,7 @@ class PostController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()) {
-                Yii::$app->session->addFlash('success', 'Yorumunuz kaydedildi iletildi.');
+                Yii::$app->session->addFlash('success', 'Yorumunuz kontrol edilmek üzere kaydedildi. Katkınız için teşekkürler.');
             } else {
                 Yii::$app->session->addFlash('error', 'HATA! Yorumunuz kaydedilemedi.');
             }

@@ -27,6 +27,9 @@ $this->params['description']  = $description;
                     <div class="post-description">
                         <?= $post->description ?>
                     </div>
+                    <div class="post-date">
+                        <?= Helper::getDate($post->post_date) ?>
+                    </div>
                 </div>
             <?php } ?>
         <?php } else { ?>

@@ -36,10 +36,8 @@ AppAsset::register($this);
         ],
     ]);
 
-    $menuItems  = [
-        ['label' => 'Yazılar', 'url' => ['/post/index']],
-    ];
-
+    $menuItems[] = ['label' => 'Yazılar', 'url' => ['/post/index']];
+    $menuItems[] = ['label' => 'Yorumlar', 'url' => ['/comment/index']];
     $menuItems[] = ['label' => 'Kategoriler', 'url' => ['/category/index']];
     $menuItems[] = ['label' => 'Etiketler', 'url' => ['/tag/index']];
     $menuItems[] = ['label' => 'Sayfalar', 'url' => ['/page/index']];

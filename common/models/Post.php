@@ -126,6 +126,12 @@ class Post extends ActiveRecord
         return $post->limit($limit)->all();
     }
 
+    /**
+     * @param $id
+     * @param int $slug
+     *
+     * @return false|Post
+     */
     public static function getItem($id, $slug = 0)
     {
         $post   = Post::find()->andWhere(['post_status' => Post::POST_STATUS_ACTIVE]);

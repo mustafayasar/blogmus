@@ -2,11 +2,10 @@
 namespace frontend\controllers;
 
 use common\models\Category;
+use common\models\Comment;
 use common\models\Post;
 use common\models\Tag;
 use frontend\models\CommentForm;
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
@@ -16,9 +15,6 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\web\NotFoundHttpException;
 
@@ -127,26 +123,34 @@ class PostController extends Controller
             throw new NotFoundHttpException('Sayfa Bulunamadı.');
         }
 
+        $comments       = false;
+
+        if ($post->comment_status == Post::COMMENT_STATUS_ACTIVE) {
+            $comments   = Comment::getItems($post->id, 'new');
+        }
+
         return $this->render('view', [
                 'post'          => $post,
-                'commentForm'   => new CommentForm()
+                'commentForm'   => new CommentForm(),
+                'comments'      => $comments
             ]
         );
     }
 
-    public function actionSaveComment()
+    public function actionSaveComment(): \yii\web\Response
     {
         $model  = new CommentForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-            if ($model->c) {
-                Yii::$app->session->addFlash('success', 'Mesajınız iletildi.');
+            if ($model->save()) {
+                Yii::$app->session->addFlash('success', 'Yorumunuz kaydedildi iletildi.');
             } else {
-                Yii::$app->session->addFlash('error', 'HATA! Mesajınız iletilemedi.');
+                Yii::$app->session->addFlash('error', 'HATA! Yorumunuz kaydedilemedi.');
             }
-
-            return $this->refresh();
+        } else {
+            Yii::$app->session->addFlash('error', 'HATA! Yorumunuz kaydedilemedi.');
         }
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

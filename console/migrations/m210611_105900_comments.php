@@ -13,7 +13,7 @@ class m210611_105900_comments extends Migration
             'email'         => $this->string(150)->notNull(),
             'content'       => $this->text()->notNull(),
             'comment_date'  => $this->dateTime()->notNull(),
-            'status'        => $this->tinyInteger()->notNull()->defaultValue(Comment::STATUS_PASSIVE),
+            'status'        => $this->tinyInteger()->notNull()->defaultValue(Comment::STATUS_WAITING),
             'created_at'    => $this->integer()->notNull(),
             'updated_at'    => $this->integer()->notNull(),
         ], Yii::$app->params['dbTableOptions']);

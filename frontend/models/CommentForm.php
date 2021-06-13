@@ -5,6 +5,7 @@ namespace frontend\models;
 use common\models\Comment;
 use common\models\Post;
 use Yii;
+use yii\base\BaseObject;
 use yii\base\Model;
 
 /**
@@ -47,18 +48,14 @@ class CommentForm extends Model
 
     public function save(): bool
     {
-        if ($this->validate()) {
-            $comment    = new Comment();
-            $comment->post_id       = $this->post_id;
-            $comment->name          = $this->name;
-            $comment->email         = $this->email;
-            $comment->content       = $this->content;
-            $comment->comment_date  = date("Y-m-d H:i:s");
-            $comment->status        = Comment::STATUS_PASSIVE;
+        $comment    = new Comment();
+        $comment->post_id       = $this->post_id;
+        $comment->name          = $this->name;
+        $comment->email         = $this->email;
+        $comment->content       = $this->content;
+        $comment->comment_date  = date("Y-m-d H:i:s");
+        $comment->status        = Comment::STATUS_WAITING;
 
-            return $comment->save();
-        }
-
-        return false;
+        return $comment->save();
     }
 }

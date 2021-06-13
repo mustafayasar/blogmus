@@ -40,6 +40,7 @@ return [
             'enablePrettyUrl'   => true,
             'showScriptName'    => false,
             'rules' => [
+                'yorumu-kaydet'     => 'post/save-comment',
                 'yazilar'           => 'post/index',
                 'kategori/<slug>'   => 'post/category',
                 'etiket/<slug>'     => 'post/tag',

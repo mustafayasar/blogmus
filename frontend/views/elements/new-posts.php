@@ -3,6 +3,7 @@
 /* @var $limit */
 /* @var $posts Post[] */
 
+use common\my\Helper;
 use common\models\Post;
 use yii\helpers\Url;
 
@@ -22,6 +23,9 @@ $posts  = Post::getNewItems($limit);
             <h3 class="post-title"><a href="<?= Url::to(['post/view', 'slug' => $post->slug]) ?>" title="<?= $post->title ?>"><?= $post->title ?></a></h3>
             <div class="post-description">
                 <?= $post->description ?>
+            </div>
+            <div class="post-date">
+                <?= Helper::getDate($post->post_date) ?>
             </div>
         </div>
     <?php } ?>

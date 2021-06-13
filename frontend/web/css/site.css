@@ -173,6 +173,12 @@ a.desc:after {
 .post-list .post-item .post-description {
 
 }
+.post-list .post-item .post-date {
+    font-size: 14px;
+    text-align: right;
+    color: #8e8e8e;
+    padding: 3px 10px 0;
+}
 .post-view {
 
 }
@@ -236,4 +242,35 @@ a.desc:after {
     .home-about a.btn {
         font-size: 16px;
     }
+}
+
+.comments {
+
+}
+.comment {
+    margin-bottom: 22px;
+}
+.comment-avatar {
+    padding: 0;
+}
+.comment-avatar img {
+    width: 100%;
+    border-radius: 6px;
+}
+.comment-info {
+
+}
+.comment-name {
+
+}
+.comment-name h4 {
+    margin-top: 0;
+}
+.comment-content {
+    padding: 0 0 16px;
+    color: #545454;
+}
+.comment-date {
+    text-align: right;
+    color: #ccc;
 }
